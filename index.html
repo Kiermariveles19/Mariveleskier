@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Pet Center Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-circle">
+      <h2>Pet Management</h2>
+      <!-- Added id="loginForm" -->
+      <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <!-- Optional: place the login button inside the form for better UX -->
+        <button type="submit" id="loginButton" class="login-button">LOGIN</button>
+      </form>
+      <p id="error-message" style="color:red; margin-top: 10px;"></p>
+    </div>
+  </div>
+
+  <script>
+    let loginAttempts = 0;
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('error-message');
+      const loginButton = document.getElementById('loginButton');
+
+      if (loginAttempts >= 3) {
+        errorMessage.textContent = 'Too many failed attempts. Please wait 10 seconds before trying again.';
+        loginButton.disabled = true;
+        setTimeout(() => {
+          loginAttempts = 0;
+          errorMessage.textContent = '';
+          loginButton.disabled = false;
+        }, 10000);
+        return;
+      }
+
+      if (username === 'admin123' && password === 'admin123') {
+        alert('Login successful!');
+        window.location.href = 'Home.html';
+      } else {
+        loginAttempts++;
+        errorMessage.textContent = 'Invalid username or password. Attempt ' + loginAttempts + ' of 3.';
+      }
+    });
+  </script>
+</body>
+</html>
